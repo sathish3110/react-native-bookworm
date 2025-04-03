@@ -3,7 +3,8 @@ import "dotenv/config";
 
 import authRoutes from "./routes/authRoutes.js";
 import { connectDB } from "./lib/db.js";
-
+import job from "./lib/cron.js";
+job.start();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
