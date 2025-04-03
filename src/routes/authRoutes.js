@@ -36,12 +36,12 @@ router.post("/register", async (req, res) => {
         .json({ message: "Username must be between 3 and 20 characters long" });
     }
     // Check if user already exists
-    const existingEmail = User.findOne({ email });
+    const existingEmail = await User.findOne({ email });
     console.log(existingEmail);
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
     }
-    const existingUsername = User.findOne({ username });
+    const existingUsername = await User.findOne({ username });
     if (existingUsername) {
       return res.status(400).json({ message: "Username already exists" });
     }
