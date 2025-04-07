@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", protectedRoute, async (req, res) => {
   try {
     const { title, caption, image, rating } = req.body;
-    if (!title || !caption || !image || !rating) {
+    if (!title || !caption || !rating) {
       return res.status(400).json({ message: "All fields are required" });
     }
     if (rating < 1 || rating > 5) {
@@ -18,9 +18,11 @@ router.post("/", protectedRoute, async (req, res) => {
     }
 
     // upload image to cloudinary
-
-    const uploadResponse = await cloudinary.uploader.upload(image);
-    const imageUrl = uploadResponse.secure_url;
+    let imageUrl = "";
+    if (image) {
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
+    }
 
     // Logic to save the book to the database
     const newBook = new Book({
